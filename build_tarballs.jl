@@ -14,32 +14,14 @@ sources = [
 
 script = """cd symengine-$version
 """*raw"""
-UNAME=`uname`
-if [[ ${UNAME} == MSYS_NT-6.3 ]]; then
-  ln -sf $prefix/bin/libgmp-10.dll $prefix/lib/libgmp.lib
-  ln -sf $prefix/bin/libmpfr-4.dll $prefix/lib/libmpfr.lib
-  ln -sf $prefix/bin/libmpc-3.dll $prefix/lib/libmpc.lib
-fi
 cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=/opt/$target/$target.toolchain -DBUILD_TESTS=no -DBUILD_BENCHMARKS=no  -DBUILD_SHARED_LIBS=yes -DWITH_MPC=yes -DBUILD_FOR_DISTRIBUTION=yes .
 make -j
 make install
-if [[ ${UNAME} == MSYS_NT-6.3 ]]; then
-  rm -f $prefix/lib/libgmp.lib
-  rm -f $prefix/lib/libmpfr.lib
-  rm -f $prefix/lib/libmpc.lib
-fi
 """
+
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-platforms = [
-    BinaryProvider.Linux(:aarch64, :glibc, :blank_abi),
-    BinaryProvider.Windows(:i686, :blank_libc, :blank_abi),
-    BinaryProvider.Linux(:armv7l, :glibc, :eabihf),
-    BinaryProvider.Windows(:x86_64, :blank_libc, :blank_abi),
-    BinaryProvider.Linux(:x86_64, :glibc, :blank_abi),
-    BinaryProvider.MacOS(:x86_64, :blank_libc, :blank_abi),
-    BinaryProvider.Linux(:i686, :glibc, :blank_abi)
-]
+platforms = supported_platforms()
 
 # The products that we will ensure are always built
 products(prefix) = [
@@ -48,9 +30,9 @@ products(prefix) = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaMath/GMPBuilder/releases/download/v6.1.2/build.jl",
-    "https://github.com/JuliaMath/MPFRBuilder/releases/download/v4.0.1/build.jl",
-    "https://github.com/isuruf/MPCBuilder/releases/download/v1.1.0/build_mpc.v1.1.0.jl"
+    "https://github.com/JuliaMath/GMPBuilder/releases/download/v6.1.2-2/build_GMP.v6.1.2.jl"
+    "https://github.com/JuliaMath/MPFRBuilder/releases/download/v4.0.1-3/build_MPFR.v4.0.1.jl"
+    "https://github.com/isuruf/MPCBuilder/releases/download/v1.1.0-2/build_MPC.v1.1.0.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
