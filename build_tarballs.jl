@@ -24,8 +24,10 @@ make install
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-platforms = [Windows(:x86_64)]
-platforms = BinaryBuilder.replace_gcc_version.(platforms, :gcc7)
+a = supported_platforms()
+deleteat!(a, findfirst(x->x==Windows(:x86_64), a))
+platforms = BinaryBuilder.expand_gcc_versions(Windows(:x86_64))
+#platforms = vcat(platforms, a)
 
 # The products that we will ensure are always built
 products(prefix) = [
@@ -36,7 +38,7 @@ products(prefix) = [
 dependencies = [
     "https://github.com/JuliaPackaging/Yggdrasil/releases/download/GMP-v6.1.2-1/build_GMP.v6.1.2.jl"
     "https://github.com/JuliaPackaging/Yggdrasil/releases/download/MPFR-v4.0.2-0/build_MPFR.v4.0.2.jl"
-    "https://github.com/isuruf/MPCBuilder/releases/download/v1.1.0-2/build_MPC.v1.1.0.jl"
+    "https://github.com/isuruf/MPCBuilder/releases/download/v1.1.0-3/build_MPC.v1.1.0.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
