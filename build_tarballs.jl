@@ -27,7 +27,7 @@ make install
 a = supported_platforms()
 deleteat!(a, findfirst(x->x==Windows(:x86_64), a))
 platforms = BinaryBuilder.expand_gcc_versions(Windows(:x86_64))
-#platforms = vcat(platforms, a)
+platforms = vcat(platforms, a)
 
 # The products that we will ensure are always built
 products(prefix) = [
