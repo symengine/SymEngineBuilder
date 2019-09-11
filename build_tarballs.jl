@@ -4,10 +4,10 @@ using BinaryBuilder
 
 # Collection of sources required to build MPCBuilder
 name = "SymEngine"
-version = v"0.4.1"
+version = v"0.5.0"
 sources = [
     "https://github.com/symengine/symengine/releases/download/v$version/symengine-$version.tar.gz" =>
-    "4bbb17c82c9f8d9ab7a65ae011ac236c7aaf1e01f3331efdb787e95986c016b3",
+    "5d02002f00d16a0928d1056e6ecb8f34fd59f3bfd8ed0009a55700334dbae29b",
 ]
 
 # Bash recipe for building across all platforms
